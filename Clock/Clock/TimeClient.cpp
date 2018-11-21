@@ -4,7 +4,7 @@ TimeClient::TimeClient(int UTC) {
 	myUTC = UTC;
 }
 
-void updateTime() {
+void TimeClient::updateTime() {
 	WiFiClient client;
 	const int httpPort = 80;
 	if (!client.connect("www.google.com", httpPort)) {
@@ -32,7 +32,6 @@ void updateTime() {
 			line = client.readStringUntil('\n');
 			line.toUpperCase(); //대문자로 변경
 			// example: 
-			// date: Thu, 19 Nov 2015 20:25:40 GMT
 			if (line.startsWith("DATE: ")) {
 				Serial.println(line.substring(23, 25) + ":" + line.substring(26, 28) + ":" + line.substring(29, 31));
 				int parsedHours = line.substring(23, 25).toInt();
@@ -42,21 +41,28 @@ void updateTime() {
 
 				Epoch = (parsedHours * 60 * 60 + parsedMinutes * 60 + parsedSeconds);
 				Serial.println(Epoch);
-				localMillisAtUpdate = millis();
+				lastMillis = millis();
 			}
 		}
 	}
 }
 
-String getHours() {
+String TimeClient::getHours() {
 
 }
 
-String getMinutes() {
+String TimeClient::getMinutes() {
 
 }
 
-String getSeconds() {
+String TimeClient::getSeconds() {
 
+}
+
+long TimeClient::getCurrentEpoch() {
+
+}
+
+long TimeClient::getCurrentEpochWithUtc() {
 
 }
