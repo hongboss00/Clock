@@ -21,11 +21,23 @@
     <ClInclude Include="__vm\.Clock.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ssd1306_i2c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="TimeClient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="images.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ssd1306_i2c.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TimeClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

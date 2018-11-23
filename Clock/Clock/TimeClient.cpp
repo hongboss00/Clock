@@ -23,6 +23,8 @@ void TimeClient::updateTime() {
 		repeatCounter++;
 	}
 
+	Serial.println("Updating Successful");
+
 	String line;
 
 	int size = 0;
@@ -30,7 +32,7 @@ void TimeClient::updateTime() {
 	while (client.connected()) {
 		while ((size = client.available()) > 0) {
 			line = client.readStringUntil('\n');
-			line.toUpperCase(); //대문자로 변경
+			line.toUpperCase(); 
 			// example: 
 			if (line.startsWith("DATE: ")) {
 				Serial.println(line.substring(23, 25) + ":" + line.substring(26, 28) + ":" + line.substring(29, 31));
@@ -41,6 +43,7 @@ void TimeClient::updateTime() {
 
 				Epoch = (parsedHours * 60 * 60 + parsedMinutes * 60 + parsedSeconds);
 				Serial.println(Epoch);
+				Serial.println(Epoch);
 				lastMillis = millis();
 			}
 		}
@@ -48,21 +51,35 @@ void TimeClient::updateTime() {
 }
 
 String TimeClient::getHours() {
-
+	int hours = ((getCurrentEpochWithUtc() % 86400) / 3600) % 24;
+	if (hours < 10) {
+		return "0" + String(hours);
+	}
+	return String(hours);
 }
 
 String TimeClient::getMinutes() {
-
+	int minutes = ((getCurrentEpochWithUtc() % 3600) / 60);
+	if (minutes < 10) {
+		return "0" + String(minutes);
+	}
+ return String(minutes);
 }
 
 String TimeClient::getSeconds() {
-
+	int seconds = getCurrentEpochWithUtc() % 60;
+	if (seconds < 10) {
+		return "0" + String(seconds);
+	}
+	return String(seconds);
 }
 
 long TimeClient::getCurrentEpoch() {
 
+	return Epoch + (millis() - lastMillis) / 1000;
+
 }
 
 long TimeClient::getCurrentEpochWithUtc() {
-
+	return round(getCurrentEpoch() + 3600 * myUTC + 86400L) % 86400L;
 }
